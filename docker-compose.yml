@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+    dashboard_backend:
+       container_name: dashboard_backend
+       build:
+           context: ./backend
+       command: npm start
+    #    volumes:
+        #    - ./backend:/app
+       ports:
+           - "3000:3000"
+       networks:
+           - dashboard_network
+       restart: unless-stopped
+
+    server:
+        container_name: server
+        build:
+            context: ./frontend
+        command: npm run serve
+        # volumes:
+            # - ./frontend:/app
+        ports:
+            - "8080:8080"
+        networks:
+            - dashboard_network
+        restart: unless-stopped
+
+networks:
+    dashboard_network: null
